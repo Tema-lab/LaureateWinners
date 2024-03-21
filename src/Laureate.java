@@ -33,6 +33,10 @@ public class Laureate {
         return citation;
     }
 
+    public String getYearOfPrize(LiteraturePrize prize) {
+        return prize.getYear(); // Retrieve the year from the LiteraturePrize
+    }
+
     public Laureate(String name, List<String>birth_death, List<String> nations, List<String> languages, List<String> genres, String citation) {
         this.name = name;
         this.birth_death = birth_death;

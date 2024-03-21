@@ -33,7 +33,7 @@ public class ProgramManager {
                 userOptions.selectChoice(sc,literaturePrizes);
                 break;
             case "3":
-                userOptions.searchChoice();
+                userOptions.searchChoice(sc,literaturePrizes);
                 break;
             case "0":
                 userOptions.exitChoice(sc);
