@@ -40,16 +40,13 @@ public class UserOptions {
             for (Laureate laureate : prize.getWinners()) {
                 for (String genre : laureate.getGenres()) {
                     if (genre.toUpperCase().contains(searchTerm)) {
-                        // Capitalize the matching portion of the genre string
                         String capitalizedGenre = capitalizeMatchingSubstring(genre, searchTerm);
-                        // Add laureate information along with the year of the prize
                         matchingLaureates.add(new Object[]{laureate.getName(), capitalizedGenre, prizeYear});
-                        break; // Exit the inner loop once a match is found
+                        break;
                     }
                 }
             }
         }
-
         if (!matchingLaureates.isEmpty()) {
             Collections.sort(matchingLaureates, Comparator.comparing(obj -> (String) obj[0]));
 
@@ -64,7 +61,6 @@ public class UserOptions {
 
                 System.out.printf("| %-17s | %-40s | %-4d |\n", name, genre, year);
             }
-
             System.out.println("------------------------------------------------------------------------------------------------------------------");
         } else {
             System.out.println("No matches found for the entered search term.");
@@ -83,11 +79,6 @@ public class UserOptions {
         return original;
     }
 
-
-    public void searchChoice(){
-        System.out.println("Select choice");
-    }
-
     public void exitChoice(Scanner sc){
         System.out.println("Exit choice");
         sc.close();
@@ -102,6 +93,7 @@ public class UserOptions {
         }
         return choice;
     }
+
     public String validateUserEndYearInput(Scanner sc){
         System.out.println("Enter end year > ");
         String choice = sc.nextLine().trim();
@@ -151,14 +143,13 @@ public class UserOptions {
         String diedHeader = "Died";
         String languagesHeader = "Language(s)";
         String genresHeader = "Genre(s)";
-        String citationHeader = "Citation:";
 
-
-        selectTable.append("----------------------------------------------------------------------------------------------\n");
-        selectTable.append(String.format("| %-23s | %-7s | %-6s | %-23s | %-20s |\n", winnerHeader, bornHeader, diedHeader, languagesHeader, genresHeader));
-        selectTable.append("----------------------------------------------------------------------------------------------\n");
+        selectTable.append("------------------------------------------------------------------------------------------\n");
+        selectTable.append(String.format("| %-23s | %-4s | %-4s | %-23s | %-20s |\n", winnerHeader, bornHeader, diedHeader, languagesHeader, genresHeader));
+        selectTable.append("------------------------------------------------------------------------------------------\n");
 
         boolean isYearFound = false;
+
         for (LiteraturePrize prize : literaturePrizes) {
             int year = Integer.parseInt(prize.getYear());
 
@@ -166,30 +157,7 @@ public class UserOptions {
                 isYearFound = true;
                 List<Laureate> winners = prize.getWinners();
                 for (Laureate winner : winners) {
-                    String name = winner.getName();
-                    String born = winner.getBirth_death().get(0);
-                    String died = winner.getBirth_death().size() > 1 ? winner.getBirth_death().get(1) : "";
-                    List<String> languages = winner.getLanguages();
-                    List<String> genres = winner.getGenres();
-
-                    StringBuilder languagesStringBuilder = new StringBuilder();
-                    StringBuilder genreStringBuilder = new StringBuilder();
-
-                    for (int i = 0; i < languages.size(); i++) {
-                        languagesStringBuilder.append(String.format("%-20s",languages.get(i)));
-                    }
-                    for (int i = 0; i < genres.size(); i++) {
-                        genreStringBuilder.append(String.format("%-80s|",genres.get(i) + String.format("%-80s\n", "|")));
-                    }
-
-                    selectTable.append(String.format("| %-23s | %-7s | %-6s | %-23s | %-20s |\n", name, born, died, languagesStringBuilder, genreStringBuilder));
-
-                    // Append citation for each laureate
-                    String citation = winner.getCitation();
-                    selectTable.append("----------------------------------------------------------------------------------------------\n");
-                    selectTable.append("| Citation: |\n");
-                    selectTable.append(String.format("| %s |\n", citation));
-                    selectTable.append("----------------------------------------------------------------------------------------------\n");
+                   selectTable.append(winner.toString());
                 }
                 break;
             }
@@ -197,7 +165,6 @@ public class UserOptions {
         if (!isYearFound) {
             selectTable.append("No prize found for the entered year.\n");
         }
-
         return selectTable;
     }
 

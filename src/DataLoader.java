@@ -71,7 +71,7 @@ public class DataLoader {
                         }
 
                         // Read the citation
-                        String laureateCitation = sc.nextLine().trim().replaceAll("^\"|\"$", "");
+                        String laureateCitation = sc.nextLine().trim();
 
                         // Read the genres
                         List<String> laureateGenres = new ArrayList<>();
